@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#061c31">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Shark Week">
+  <meta name="description" content="Shark Week — a simple private tampon in/out tracker.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <title>Shark Week</title>
+  <style>
+    :root {
+      --navy:#061c31; --navy2:#0a2c49; --aqua:#43d9ee; --blue:#0b78b5;
+      --red:#ff3f5b; --green:#2fc56b; --ink:#092238; --muted:#7e9bb0;
+      --card:rgba(255,255,255,.94);
+    }
+    * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    html,body { margin:0; min-height:100%; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Rounded","Helvetica Neue",Arial,sans-serif; background:var(--navy); color:white; }
+    body { padding-bottom:env(safe-area-inset-bottom); }
+    button { font:inherit; }
+    .app { min-height:100vh; position:relative; overflow:hidden; background:
+      radial-gradient(circle at 15% 5%, rgba(67,217,238,.20), transparent 30%),
+      radial-gradient(circle at 90% 25%, rgba(20,117,181,.35), transparent 30%),
+      linear-gradient(180deg,#082b48 0%,#061c31 52%,#041526 100%); }
+    .app:before { content:""; position:absolute; inset:0; opacity:.14; pointer-events:none;
+      background-image:radial-gradient(circle, #fff 1px, transparent 1.5px); background-size:58px 72px; }
+    header { padding:calc(env(safe-area-inset-top) + 22px) 20px 10px; display:flex; align-items:center; justify-content:space-between; position:relative; z-index:2; }
+    .brand { display:flex; align-items:center; gap:11px; }
+    .brand img { width:48px; height:48px; border-radius:15px; box-shadow:0 5px 18px rgba(0,0,0,.25); }
+    .brand h1 { margin:0; font-size:25px; letter-spacing:-.8px; font-weight:900; }
+    .brand small { display:block; color:#a9eaf3; font-weight:700; margin-top:1px; letter-spacing:.3px; }
+    main { position:relative; z-index:2; max-width:560px; margin:0 auto; padding:12px 18px 32px; }
+    .hero { text-align:center; padding:10px 0 15px; }
+    .hero h2 { margin:0; font-size:17px; letter-spacing:1.6px; color:#a7eaf2; text-transform:uppercase; }
+    .status { font-size:32px; font-weight:900; margin:4px 0 4px; letter-spacing:-1px; }
+    .sub { color:#b7cbd8; font-size:15px; }
+    .button-wrap { display:flex; justify-content:center; margin:16px 0 20px; }
+    .big-button { width:min(78vw,320px); aspect-ratio:1; border-radius:50%; border:8px solid rgba(255,255,255,.82);
+      color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+      box-shadow:0 22px 48px rgba(0,0,0,.34), inset 0 0 0 2px rgba(255,255,255,.25);
+      transition:transform .12s ease, filter .12s ease; }
+    .big-button:active { transform:scale(.97); filter:brightness(.94); }
+    .big-button.in { background:radial-gradient(circle at 32% 20%, #ff7183, var(--red) 60%, #cf1832); }
+    .big-button.out { background:radial-gradient(circle at 32% 20%, #62e894, var(--green) 60%, #15954a); }
+    .tampon { font-size:58px; line-height:1; transform:rotate(-24deg); }
+    .big-label { font-size:24px; font-weight:950; letter-spacing:.6px; }
+    .big-help { font-size:13px; opacity:.9; }
+    .card { background:var(--card); color:var(--ink); border-radius:22px; padding:17px; margin:12px 0; box-shadow:0 10px 28px rgba(0,0,0,.16); }
+    .metrics { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .metric { background:#edf7fb; border-radius:17px; padding:14px; }
+    .metric .label { color:#628197; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.6px; }
+    .metric .value { font-size:19px; font-weight:900; margin-top:5px; }
+    .timer { font-variant-numeric:tabular-nums; font-size:31px!important; letter-spacing:-1px; }
+    .history-title { display:flex; justify-content:space-between; align-items:center; }
+    .history-title h3 { margin:0; font-size:20px; }
+    .clear { border:0; background:transparent; color:#d72d45; font-weight:800; padding:8px; }
+    .empty { color:#718a9a; padding:12px 0 2px; line-height:1.45; }
+    .row { border-top:1px solid #e1ebf0; padding:14px 0 2px; display:flex; justify-content:space-between; gap:10px; }
+    .row:first-of-type { border-top:0; }
+    .row .date { font-weight:850; }
+    .row .times { color:#718a9a; font-size:13px; margin-top:4px; }
+    .duration { font-weight:900; white-space:nowrap; }
+    .privacy { text-align:center; color:#9ab4c4; font-size:12px; padding:10px 24px 30px; line-height:1.5; }
+    .notice { background:rgba(67,217,238,.10); border:1px solid rgba(67,217,238,.2); color:#b9edf3; border-radius:16px; padding:11px 13px; font-size:13px; line-height:1.4; }
+    @media (min-width:700px) { .app { min-height:100vh; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <img src="icons/icon-192.png" alt="">
+      <div><h1>Shark Week</h1><small>Track. Protect. Flow on. 🦈</small></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Current status</h2>
+      <div id="status" class="status">TAMPON OUT</div>
+      <div id="sub" class="sub">Tap the button when inserted</div>
+    </section>
+
+    <div class="button-wrap">
+      <button id="toggle" class="big-button out" aria-label="Mark tampon in">
+        <div class="tampon">🩸</div>
+        <div id="buttonLabel" class="big-label">TAMPON OUT</div>
+        <div id="buttonHelp" class="big-help">Tap when removed</div>
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="metrics">
+        <div class="metric"><div class="label">Inserted</div><div id="inserted" class="value">—</div></div>
+        <div class="metric"><div class="label">Time in</div><div id="elapsed" class="value timer">00:00:00</div></div>
+      </div>
+    </div>
+
+    <div class="notice">Your tracking history is stored only on this device. No account is required.</div>
+
+    <section class="card">
+      <div class="history-title">
+        <h3>History</h3>
+        <button id="clear" class="clear">Clear all</button>
+      </div>
+      <div id="history"></div>
+    </section>
+
+    <div class="privacy">Shark Week is a simple tracking tool and not a substitute for medical advice.</div>
+  </main>
+</div>
+
+<script>
+(() => {
+  const ACTIVE = "shark_week_active_v1";
+  const HISTORY = "shark_week_history_v1";
+  const $ = id => document.getElementById(id);
+
+  let active = JSON.parse(localStorage.getItem(ACTIVE) || "null");
+  let history = JSON.parse(localStorage.getItem(HISTORY) || "[]");
+
+  const save = () => {
+    if (active) localStorage.setItem(ACTIVE, JSON.stringify(active));
+    else localStorage.removeItem(ACTIVE);
+    localStorage.setItem(HISTORY, JSON.stringify(history));
+  };
+
+  const fmtDate = iso => new Date(iso).toLocaleString([], {day:"numeric", month:"short", year:"numeric", hour:"numeric", minute:"2-digit"});
+  const fmtTime = iso => new Date(iso).toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+  const fmtDuration = ms => {
+    const s = Math.max(0, Math.floor(ms/1000));
+    const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+    return [h,m,sec].map((x,i) => i===0 ? String(x).padStart(2,"0") : String(x).padStart(2,"0")).join(":");
+  };
+  const fmtShortDuration = ms => {
+    const s = Math.max(0, Math.floor(ms/1000));
+    const h = Math.floor(s/3600), m = Math.floor((s%3600)/60);
+    return h ? `${h}h ${String(m).padStart(2,"0")}m` : `${m}m`;
+  };
+
+  function render() {
+    const inNow = !!active;
+    $("status").textContent = inNow ? "TAMPON IN" : "TAMPON OUT";
+    $("status").style.color = inNow ? "var(--red)" : "var(--green)";
+    $("sub").textContent = inNow ? "Timer is running" : "Tap the button when inserted";
+    $("toggle").className = "big-button " + (inNow ? "in" : "out");
+    $("toggle").setAttribute("aria-label", inNow ? "Mark tampon out" : "Mark tampon in");
+    $("buttonLabel").textContent = inNow ? "TAMPON IN" : "TAMPON OUT";
+    $("buttonHelp").textContent = inNow ? "Tap when removed" : "Tap when inserted";
+    $("inserted").textContent = active ? fmtDate(active.insertedAt) : "—";
+    $("elapsed").textContent = active ? fmtDuration(Date.now() - new Date(active.insertedAt).getTime()) : "00:00:00";
+
+    if (!history.length) {
+      $("history").innerHTML = '<div class="empty">Completed sessions will appear here after you mark a tampon out.</div>';
+    } else {
+      $("history").innerHTML = history.map((s) => `
+        <div class="row">
+          <div><div class="date">${fmtDate(s.insertedAt)}</div>
+          <div class="times">Out: ${fmtTime(s.removedAt)}</div></div>
+          <div class="duration">${fmtShortDuration(new Date(s.removedAt)-new Date(s.insertedAt))}</div>
+        </div>`).join("");
+    }
+  }
+
+  $("toggle").addEventListener("click", () => {
+    if (!active) {
+      active = { insertedAt: new Date().toISOString() };
+    } else {
+      const completed = { insertedAt: active.insertedAt, removedAt: new Date().toISOString() };
+      history.unshift(completed);
+      active = null;
+    }
+    save(); render();
+  });
+
+  $("clear").addEventListener("click", () => {
+    if (!history.length) return;
+    if (confirm("Clear all completed sessions?")) {
+      history = []; save(); render();
+    }
+  });
+
+  setInterval(render, 1000);
+  document.addEventListener("visibilitychange", render);
+  render();
+
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+})();
+</script>
+</body>
+</html>

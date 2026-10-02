@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#061b30">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shark Week">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Shark Week</title>
+<style>
+:root{--navy:#061b30;--navy2:#0a3150;--aqua:#50dff0;--red:#ff4059;--green:#32c66b;--ink:#08243b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--navy);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Rounded","Helvetica Neue",Arial,sans-serif}
+.app{min-height:100vh;background:radial-gradient(circle at 10% 0%,#50dff033,transparent 30%),radial-gradient(circle at 100% 20%,#1475b955,transparent 35%),linear-gradient(#0a3150,#061b30 55%,#031321);overflow:hidden}
+.app:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px);background-size:61px 79px}
+header{position:relative;z-index:2;padding:calc(env(safe-area-inset-top) + 17px) 18px 8px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:11px;align-items:center}.brand img{width:49px;height:49px;border-radius:15px;box-shadow:0 6px 18px #0005}.brand h1{margin:0;font-size:25px;letter-spacing:-1px}.brand small{color:#a9eaf3;font-size:11px;font-weight:800}
+.gear{width:42px;height:42px;border:1px solid #ffffff2a;border-radius:15px;background:#ffffff12;color:white;font-size:20px}
+main{position:relative;z-index:2;max-width:620px;margin:auto;padding:8px 17px 34px}.hero{text-align:center}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;color:#a9eaf3;font-size:12px;font-weight:900}.status{font-size:33px;font-weight:950;letter-spacing:-1.3px;margin:3px 0}.sub{color:#b7cad7;font-size:14px}
+.button-wrap{display:flex;justify-content:center;margin:13px 0 16px}.big{width:min(72vw,300px);aspect-ratio:1;border-radius:50%;border:8px solid #ffffffd9;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 22px 50px #0006,inset 0 0 0 2px #ffffff33;transition:.12s}.big:active{transform:scale(.97)}.big.in{background:radial-gradient(circle at 32% 18%,#ff7385,var(--red) 60%,#cf1732)}.big.out{background:radial-gradient(circle at 32% 18%,#62e991,var(--green) 60%,#15934a)}.tampon{font-size:52px;transform:rotate(-24deg)}.big strong{font-size:23px}.big span{font-size:12px}
+.card{background:#fffffff2;color:var(--ink);border-radius:22px;padding:16px;margin:12px 0;box-shadow:0 12px 30px #0003}.grid,.stats,.tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric,.stat{background:#eef8fb;border-radius:16px;padding:13px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.65px;color:#6b8798;font-weight:900}.value{font-size:17px;font-weight:900;margin-top:5px}.timer{font-size:27px!important;font-variant-numeric:tabular-nums}.safety{margin-top:11px;background:#fff3f4;border-radius:15px;padding:12px;color:#7c2532;font-size:13px;line-height:1.35}.safety b{color:#d52642}.notice{background:#ffffff0d;border:1px solid #ffffff1e;color:#b9e9ef;border-radius:16px;padding:11px 13px;font-size:12px;line-height:1.45}
+.tabs{margin:12px 0}.tab{border:0;border-radius:15px;padding:12px;background:#ffffff10;color:#c6dce6;font-weight:850}.tab.active{background:#ffffffea;color:var(--ink)}.panel{display:none}.panel.active{display:block}.head{display:flex;justify-content:space-between;align-items:center}.head h2{font-size:19px;margin:0}.clear{border:0;background:transparent;color:#d52d45;font-weight:850}.row{padding:13px 0;border-top:1px solid #e1ebef;display:flex;justify-content:space-between}.row:first-child{border-top:0}.row b{font-size:14px}.row small{display:block;color:#70899a;margin-top:3px}.dur{font-weight:950}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px}.dow{text-align:center;color:#7892a3;font-size:10px;font-weight:900}.day{aspect-ratio:1;border:0;border-radius:11px;background:#f0f7fa;color:var(--ink);font-weight:800;position:relative}.day.dot:after{content:"";position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%;background:var(--green)}.day.today{outline:2px solid var(--aqua)}.empty{background:transparent}.stat strong{font-size:21px;display:block}.stat small{color:#70899a}.install{background:linear-gradient(135deg,#0b5d89,#087da9);color:white}.install p{color:#d2f6fa;font-size:13px;line-height:1.4}.install button{border:0;border-radius:13px;background:white;color:#075a82;padding:10px 13px;font-weight:900}.footer{text-align:center;color:#91acbb;font-size:11px;line-height:1.5;padding:14px 20px 30px}
+</style></head>
+<body><div class="app">
+<header><div class="brand"><img src="icons/icon-192.png" alt=""><div><h1>Shark Week</h1><small>Track. Protect. Flow on. 🦈</small></div></div><button class="gear" id="info">⚙︎</button></header>
+<main>
+<section class="hero"><div class="eyebrow">Current status</div><div id="status" class="status">TAMPON OUT</div><div id="sub" class="sub">Tap when inserted</div></section>
+<div class="button-wrap"><button id="toggle" class="big out"><div class="tampon">🩸</div><strong id="bl">TAMPON OUT</strong><span id="bh">Tap when inserted</span></button></div>
+<div class="card"><div class="grid"><div class="metric"><div class="label">Inserted</div><div id="ins" class="value">—</div></div><div class="metric"><div class="label">Time in</div><div id="elapsed" class="value timer">00:00:00</div></div></div><div class="safety">🛡️ <b> Safety reminder:</b> the app flags an active session at 8 hours. Follow your product instructions.</div></div>
+<div class="tabs"><button class="tab active" data-p="history">🕘 History</button><button class="tab" data-p="calendar">📅 Calendar</button></div>
+<section id="history" class="card panel active"><div class="head"><h2>History</h2><button id="clear" class="clear">Clear all</button></div><div id="rows"></div></section>
+<section id="calendar" class="card panel"><div class="head"><h2 id="month"></h2></div><div id="cal"></div><div id="stats" class="stats"></div></section>
+<div class="card install"><b>Install Shark Week</b><p>In Safari: Share → Add to Home Screen → turn on <b>Open as Web App</b> → Add.</p><button id="how">Show instructions</button></div>
+<div class="notice">🔒 Tracking is stored locally on this device. No account or health database is used.</div><div class="footer">Shark Week is a tracking tool, not medical advice.</div>
+</main></div>
+<script>
+(()=>{const A="sw_active_v4",H="sw_history_v4";let a=JSON.parse(localStorage.getItem(A)||"null"),h=JSON.parse(localStorage.getItem(H)||"[]"),$=x=>document.getElementById(x);
+const save=()=>{a?localStorage.setItem(A,JSON.stringify(a)):localStorage.removeItem(A);localStorage.setItem(H,JSON.stringify(h))};
+const date=x=>new Date(x).toLocaleString([],{day:"numeric",month:"short",year:"numeric",hour:"numeric",minute:"2-digit"}),time=x=>new Date(x).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
+const d=ms=>{let s=Math.max(0,ms/1000|0),z=n=>String(n).padStart(2,"0");return z(s/3600|0)+":"+z(s%3600/60|0)+":"+z(s%60)},short=ms=>{let s=ms/1000|0,m=s%3600/60|0,h=s/3600|0;return h?h+"h "+String(m).padStart(2,"0")+"m":m+"m"};
+function render(){let yes=!!a,old=yes&&Date.now()-new Date(a.insertedAt)>=28800000;$("status").textContent=yes?"TAMPON IN":"TAMPON OUT";$("status").style.color=yes?"var(--red)":"var(--green)";$("sub").textContent=yes?(old?"8-hour reminder reached — please check/change":"Timer is running"):"Tap when inserted";$("toggle").className="big "+(yes?"in":"out");$("bl").textContent=yes?"TAMPON IN":"TAMPON OUT";$("bh").textContent=yes?"Tap when removed":"Tap when inserted";$("ins").textContent=a?date(a.insertedAt):"—";$("elapsed").textContent=a?d(Date.now()-new Date(a.insertedAt)):d(0);$("rows").innerHTML=h.length?h.map(s=>`<div class="row"><div><b>${date(s.insertedAt)}</b><small>Out: ${time(s.removedAt)}</small></div><div class="dur">${short(new Date(s.removedAt)-new Date(s.insertedAt))}</div></div>`).join(""):'<p style="color:#718a9a">Completed sessions will appear here.</p>';calendar()}
+function calendar(){let n=new Date(),y=n.getFullYear(),m=n.getMonth(),first=(new Date(y,m,1).getDay()+6)%7,days=new Date(y,m+1,0).getDate();$("month").textContent=n.toLocaleString([],{month:"long",year:"numeric"});let x=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(q=>`<div class="dow">${q}</div>`).join("");for(let i=0;i<first;i++)x+='<div class="empty"></div>';for(let day=1;day<=days;day++){let k=`${y}-${String(m+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`,has=h.some(s=>s.insertedAt.slice(0,10)==k)||(a&&a.insertedAt.slice(0,10)==k);x+=`<button class="day ${has?"dot":""} ${day==n.getDate()?"today":""}">${day}</button>`}$("cal").innerHTML='<div class="calendar">'+x+"</div>";let total=h.reduce((q,s)=>q+new Date(s.removedAt)-new Date(s.insertedAt),0);$("stats").innerHTML=`<div class="stat"><strong>${h.length+(a?1:0)}</strong><small>Sessions</small></div><div class="stat"><strong>${short(total)}</strong><small>Completed time</small></div>`}
+$("toggle").onclick=()=>{if(!a)a={insertedAt:new Date().toISOString()};else{h.unshift({insertedAt:a.insertedAt,removedAt:new Date().toISOString()});a=null}save();render()};
+$("clear").onclick=()=>{if(h.length&&confirm("Clear all completed sessions?")){h=[];save();render()}};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(q=>q.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".panel").forEach(q=>q.classList.remove("active"));$(b.dataset.p).classList.add("active")});
+$("info").onclick=()=>alert("Shark Week\n\nYour tracking data stays on this device. The app flags an active session after 8 hours. Reliable background push reminders require a push service, so this offline build does not send your health data anywhere.");
+$("how").onclick=()=>alert("Install on iPhone\n\n1. Open Shark Week in Safari.\n2. Tap Share.\n3. Tap Add to Home Screen.\n4. Turn on Open as Web App.\n5. Tap Add.");
+setInterval(render,1000);document.addEventListener("visibilitychange",render);render();if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
+})();</script></body></html>
